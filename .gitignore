@@ -12,3 +12,8 @@ docs/
 
 # Dotenv file
 .env
+
+# REMIX
+.deps/
+artifacts/
+compiler_config.json
