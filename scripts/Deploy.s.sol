@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import {Script} from "forge-std/Script.sol";
 import {Ingressos} from "../src/Ingressos.sol";
 
-contract DeployScript is Script {
+contract Deploy is Script {
     Ingressos public ingressos;
 
     function setUp() public {}
