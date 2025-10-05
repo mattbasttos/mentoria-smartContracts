@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.30;
 
 import {Script} from "forge-std/Script.sol";
-import {Ingressos} from "../src/Ingressos.sol";
+import {Pizzaria} from "../src/Pizzaria.sol";
 
 contract Deploy is Script {
-    Ingressos public ingressos;
+    Pizzaria public pizzaria;
 
     function setUp() public {}
 
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(privateKey);
-        ingressos = new Ingressos(100);
+        pizzaria = new Pizzaria();
         vm.stopBroadcast();
     }
 }
