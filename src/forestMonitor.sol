@@ -49,8 +49,6 @@ contract forestMonitor is ERC721 {
     }
 
     function getforestRecord(uint256 tokenId) public view returns (forestRecord memory) {
-        // CORREÇÃO: Voltamos a usar ownerOf para garantir a existência do token.
-        // Se o token não existir, esta chamada irá falhar (revert).
         ownerOf(tokenId); 
         
         return forestRecords[tokenId];
