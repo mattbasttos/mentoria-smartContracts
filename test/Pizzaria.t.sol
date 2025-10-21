@@ -18,7 +18,7 @@ contract PizzariaTest is Test {
         vm.prank(cliente); // simula cliente chamando função
         pizzaria.fazerPedido{value: 0.01 ether}("Calabresa");
 
-        (address c, string memory sabor, ) = pizzaria.pedidos(1);
+        (address c, string memory sabor,) = pizzaria.pedidos(1);
         assertEq(c, cliente);
         assertEq(sabor, "Calabresa");
     }
@@ -30,7 +30,7 @@ contract PizzariaTest is Test {
 
         pizzaria.confirmarPedido(1);
 
-        assertEq(uint(pizzaria.consultarStatus(1)), uint(Pizzaria.Status.Confirmado));
+        assertEq(uint256(pizzaria.consultarStatus(1)), uint256(Pizzaria.Status.Confirmado));
     }
 
     function testEntregarPedido() public {
@@ -41,6 +41,6 @@ contract PizzariaTest is Test {
         pizzaria.confirmarPedido(1);
         pizzaria.entregarPedido(1);
 
-        assertEq(uint(pizzaria.consultarStatus(1)), uint(Pizzaria.Status.Entregue));
+        assertEq(uint256(pizzaria.consultarStatus(1)), uint256(Pizzaria.Status.Entregue));
     }
 }

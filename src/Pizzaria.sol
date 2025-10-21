@@ -6,7 +6,12 @@ contract Pizzaria {
     uint256 public precoPizza = 0.01 ether;
     uint256 public pedidoCount;
 
-    enum Status { Nenhum, PedidoRealizado, Confirmado, Entregue }
+    enum Status {
+        Nenhum,
+        PedidoRealizado,
+        Confirmado,
+        Entregue
+    }
 
     struct Pedido {
         address cliente;

@@ -49,8 +49,8 @@ contract forestMonitor is ERC721 {
     }
 
     function getforestRecord(uint256 tokenId) public view returns (forestRecord memory) {
-        ownerOf(tokenId); 
-        
+        ownerOf(tokenId);
+
         return forestRecords[tokenId];
     }
 }

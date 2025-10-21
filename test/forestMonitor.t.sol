@@ -2,12 +2,11 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
-import "../src/forestMonitor.sol"; 
+import "../src/forestMonitor.sol";
 
 contract ForestMonitorTest is Test {
-    
     forestMonitor monitor;
-    
+
     address owner = makeAddr("owner");
     address fiscalAmbiental = makeAddr("fiscalAmbiental");
 
@@ -24,7 +23,7 @@ contract ForestMonitorTest is Test {
         assertEq(monitor.name(), "forestMonitor", "O nome do contrato deve ser 'forestMonitor'");
         assertEq(monitor.symbol(), "Monitoramento", "O simbolo do contrato deve ser 'Monitoramento'");
     }
-    
+
     function test_CreateForestRecord_Success() public {
         string memory imageID = "LANDSAT-9-PARA-SUL-2025-Q3";
         string memory areaName = "Sul do Estado do Para";
@@ -38,23 +37,17 @@ contract ForestMonitorTest is Test {
 
         vm.expectEmit(true, true, true, true);
         emit Transfer(address(0), fiscalAmbiental, 1);
-        
+
         uint256 newTokenId = monitor.createforestRecord(
-            imageID,
-            areaName,
-            periodCurrent,
-            periodPrevious,
-            coordinates,
-            deforestationArea,
-            preservedArea
+            imageID, areaName, periodCurrent, periodPrevious, coordinates, deforestationArea, preservedArea
         );
-        
+
         assertEq(newTokenId, 1);
         assertEq(monitor.ownerOf(newTokenId), fiscalAmbiental);
         assertEq(monitor.balanceOf(fiscalAmbiental), 1);
 
         forestMonitor.forestRecord memory record = monitor.getforestRecord(newTokenId);
-        
+
         assertEq(record.imageID, imageID);
         assertEq(record.areaName, areaName);
         assertEq(record.deforestationArea, deforestationArea);
@@ -65,7 +58,7 @@ contract ForestMonitorTest is Test {
     function test_TokenIdIncrementsCorrectly() public {
         vm.prank(fiscalAmbiental);
         uint256 firstTokenId = monitor.createforestRecord("IMG1", "Area1", "P1", "P0", "C1", 10, 100);
-        
+
         vm.prank(owner);
         uint256 secondTokenId = monitor.createforestRecord("IMG2", "Area2", "P2", "P1", "C2", 20, 200);
 
@@ -77,7 +70,7 @@ contract ForestMonitorTest is Test {
     /**
      * @dev Testa se a função reverte ao tentar buscar um registro para um tokenId inexistente.
      */
-    function test_RevertWhenGettingRecordForNonExistentToken() public { // <-- NOME CORRIGIDO AQUI
+    function test_RevertWhenGettingRecordForNonExistentToken() public {
         vm.expectRevert();
         monitor.getforestRecord(999);
     }

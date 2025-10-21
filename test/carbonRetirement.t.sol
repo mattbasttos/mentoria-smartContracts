@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "../src/carbonRetirement.sol"; // Verifique se o caminho está correto
+import "../src/carbonRetirement.sol"; 
 
 /**
  * @title MockNFT
@@ -23,7 +23,6 @@ contract MockNFT is ERC721 {
  * @dev Suíte de testes para o contrato CarbonRetirement.
  */
 contract CarbonRetirementTest is Test {
-    
     // Contratos que serão testados
     CarbonRetirement public retirementContract;
     MockNFT public nftContract;
@@ -40,10 +39,10 @@ contract CarbonRetirementTest is Test {
     function setUp() public {
         // 1. Cria o contrato de NFT
         nftContract = new MockNFT();
-        
+
         // 2. Cria o contrato de aposentadoria, passando o endereço do contrato de NFT
         retirementContract = new CarbonRetirement(address(nftContract));
-        
+
         // 3. Cria um NFT (tokenId 1) para o user1
         nftContract.mint(user1, TOKEN_ID);
     }
@@ -56,14 +55,14 @@ contract CarbonRetirementTest is Test {
     function test_RetireCredit_Success() public {
         // Estado inicial: verifica que o token ainda não foi aposentado
         assertFalse(retirementContract.isRetired(TOKEN_ID), "Token nao deveria estar aposentado inicialmente");
-        
+
         // Simula a chamada vindo do user1 (dono do token)
         vm.prank(user1);
 
         // Espera que o evento CreditRetired seja emitido com os dados corretos
         vm.expectEmit(true, true, false, true);
         emit CreditRetired(user1, TOKEN_ID, block.timestamp);
-        
+
         // Executa a função
         retirementContract.retireCredit(TOKEN_ID);
 
@@ -97,7 +96,7 @@ contract CarbonRetirementTest is Test {
 
         // Agora, espera que a segunda tentativa falhe com a mensagem de erro específica
         vm.expectRevert("Este credito ja foi aposentado.");
-        
+
         // Tenta aposentar novamente com o mesmo usuário
         vm.prank(user1);
         retirementContract.retireCredit(TOKEN_ID);
